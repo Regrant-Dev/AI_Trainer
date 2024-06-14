@@ -6,7 +6,16 @@ tokenizer_use_fast: false
 load_in_8bit: true
 load_in_4bit: false
 strict: false
-model_config:
+
+lora:
+  adapter: lora
+  lora_r: 8
+  lora_alpha: 16
+  lora_dropout: 0.05
+  lora_target_modules:
+    - q_proj
+    - v_proj
+
 
 datasets:
   - path: /app/data/mira_data.jsonl
@@ -19,12 +28,12 @@ dataset_prepared_path: /app/preprocess_datasets/
 val_set_size: 0.0002
 output_dir: /app/output
 
-sequence_len: 4096
+sequence_len: 2048
 sample_packing: true
 pad_to_sequence_len: true
 
 gradient_accumulation_steps: 1
-micro_batch_size: 3
+micro_batch_size: 1
 num_epochs: 1
 logging_steps: 1
 optimizer: adamw_8bit
@@ -42,13 +51,15 @@ bf16: auto
 fp16:
 tf32: false
 
+bfloat16: true
+
 gradient_checkpointing: true
 gradient_checkpointing_kwargs:
   use_reentrant: false
 early_stopping_patience:
 resume_from_checkpoint:
 local_rank:
-xformers_attention:
+xformers_attention: false
 flash_attention: true
 saves_per_epoch: 4
 save_total_limit: 2
@@ -56,7 +67,13 @@ save_steps:
 evals_per_epoch: 4
 eval_sample_packing: false
 debug:
-deepspeed: deepspeed_configs/zero3_bf16.json
+deepspeed:
 weight_decay: 0.05
 fsdp:
 fsdp_config:
+special_tokens:
+  eos_token: "<|im_end|>"
+  pad_token: "<|end_of_text|>"
+tokens:
+  - "<|im_start|>"
+  - "<|im_end|>"
