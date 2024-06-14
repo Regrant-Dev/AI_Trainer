@@ -1,5 +1,6 @@
 model:
   name_or_path: /app/base_models/Meta-Llama-3-8B-Instruct
+  load_in_8bit: true
 
 data:
   train_file: /app/data/mira_data.json
