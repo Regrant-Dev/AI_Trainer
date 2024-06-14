@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    image: winglian/axolotl-runpod:main-py3.10-cu118-2.1.2
+    ports:
+      - "2212:2212"
+    volumes:
+      - .:/app
+      - /mnt/user/appdata/AI_Server/base_models:/app/base_models
+      - /mnt/user/appdata/AI_Server/data:/app/data
+    environment:
+      - CUDA_DEVICE_ORDER=PCI_BUS_ID
+      - TORCH_CUDA_ARCH_LIST=8.9 
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['1']
+              capabilities: [gpu]
