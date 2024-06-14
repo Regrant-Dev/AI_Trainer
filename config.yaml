@@ -1,20 +1,62 @@
-model:
-  name_or_path: /app/base_models/Meta-Llama-3-8B-Instruct
-  load_in_8bit: true
+base_model: /app/base_models/Meta-Llama-3-8B-Instruct
+model_type: AutoModelForCausalLM
+tokenizer_type: AutoTokenizer
+tokenizer_use_fast: false
 
-data:
-  train_file: /app/data/mira_data.json
-  validation_file: /app/data/mira_data_eval_set.json
+load_in_8bit: true
+load_in_4bit: false
+strict: false
+model_config:
 
-training:
-  output_dir: /app/results
-  num_train_epochs: 3
-  per_device_train_batch_size: 2
-  per_device_eval_batch_size: 2
-  learning_rate: 2e-5
-  weight_decay: 0.01
-  evaluation_strategy: "epoch"
-  fp16: true
-  save_steps: 10_000
-  save_total_limit: 2
-  logging_dir: /app/logs
+datasets:
+  - path: /app/data/mira_data.jsonl
+    type: sharegpt
+    conversation: chatml
+
+chat_template: chatml
+
+dataset_prepared_path: /app/preprocess_datasets/
+val_set_size: 0.0002
+output_dir: /app/output
+
+sequence_len: 4096
+sample_packing: true
+pad_to_sequence_len: true
+
+gradient_accumulation_steps: 1
+micro_batch_size: 3
+num_epochs: 1
+logging_steps: 1
+optimizer: adamw_8bit
+lr_scheduler: cosine
+learning_rate: 2e-5
+
+wandb_project: 
+wandb_watch:
+wandb_run_id:
+wandb_log_model:
+
+train_on_inputs: false
+group_by_length: false
+bf16: auto
+fp16:
+tf32: false
+
+gradient_checkpointing: true
+gradient_checkpointing_kwargs:
+  use_reentrant: false
+early_stopping_patience:
+resume_from_checkpoint:
+local_rank:
+xformers_attention:
+flash_attention: true
+saves_per_epoch: 4
+save_total_limit: 2
+save_steps:
+evals_per_epoch: 4
+eval_sample_packing: false
+debug:
+deepspeed: deepspeed_configs/zero3_bf16.json
+weight_decay: 0.05
+fsdp:
+fsdp_config:
