@@ -3,19 +3,9 @@ model_type: AutoModelForCausalLM
 tokenizer_type: AutoTokenizer
 tokenizer_use_fast: false
 
-load_in_8bit: true
+load_in_8bit: false
 load_in_4bit: false
 strict: false
-
-lora:
-  adapter: lora
-  lora_r: 8
-  lora_alpha: 16
-  lora_dropout: 0.05
-  lora_target_modules:
-    - q_proj
-    - v_proj
-
 
 datasets:
   - path: /app/data/mira_data.jsonl
@@ -28,13 +18,13 @@ dataset_prepared_path: /app/preprocess_datasets/
 val_set_size: 0.0002
 output_dir: /app/output
 
-sequence_len: 2048
+sequence_len: 8192
 sample_packing: true
 pad_to_sequence_len: true
 
 gradient_accumulation_steps: 1
-micro_batch_size: 1
-num_epochs: 1
+micro_batch_size: 3
+num_epochs: 3
 logging_steps: 1
 optimizer: adamw_8bit
 lr_scheduler: cosine
@@ -50,8 +40,6 @@ group_by_length: false
 bf16: auto
 fp16:
 tf32: false
-
-bfloat16: true
 
 gradient_checkpointing: true
 gradient_checkpointing_kwargs:
