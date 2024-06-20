@@ -14,7 +14,7 @@ datasets:
 
 chat_template: chatml
 
-adapter: lora
+adapter: qlora
 lora_model_dir:
 lora_r: 256
 lora_alpha: 512
@@ -26,9 +26,6 @@ lora_targets:  # Define specific targets
   - o
 lora_target_linear: true
 lora_fan_in_fan_out:
-lora_modules_to_save:  # Add this parameter
-  - embed_tokens
-  - lm_head
 
 quantization_config:
   load_in_4bit: true
