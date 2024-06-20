@@ -80,11 +80,13 @@ fsdp:
 fsdp_config:
 special_tokens:
   bos_token: "<|begin_of_text|>"
-  eos_token: "<|eot_id|>"
-  pad_token: "<|eot_id|>"
+  eos_token: "<|im_end|>"
+  pad_token: "<|end_of_text|>"
 tokens:
   - "<|begin_of_text|>"
-  - "<|eot_id|>"
+  - "<|im_start|>"
+  - "<|im_end|>"
+  - "<|end_of_text|>"
   - "<|INST|>"
   - "<|/INST|>"
   - "<|user|>"
