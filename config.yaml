@@ -16,8 +16,8 @@ chat_template: chatml
 
 adapter: qlora
 lora_model_dir:
-lora_r: 256
-lora_alpha: 512
+lora_r: 128
+lora_alpha: 256
 lora_dropout: 0.05
 lora_targets:  # Define specific targets
   - q
