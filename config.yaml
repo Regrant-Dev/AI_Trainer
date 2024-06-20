@@ -63,7 +63,7 @@ local_rank:
 xformers_attention: false
 flash_attention: true
 saves_per_epoch: 3
-save_total_limit: 2
+save_total_limit: 10
 save_steps:
 evals_per_epoch: 3
 eval_sample_packing: false
