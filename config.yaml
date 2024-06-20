@@ -30,6 +30,12 @@ lora_modules_to_save:  # Add this parameter
   - embed_tokens
   - lm_head
 
+quantization_config:
+  load_in_4bit: true
+  bnb_4bit_compute_dtype: torch.bfloat16
+  bnb_4bit_use_double_quant: true
+  bnb_4bit_quant_type: nf4
+
 dataset_prepared_path: /app/preprocess_datasets/
 output_dir: /app/output
 
@@ -79,4 +85,8 @@ special_tokens:
 tokens:
   - "<|begin_of_text|>"
   - "<|eot_id|>"
-  - "<|eot_id|>"
+  - "<|INST|>"
+  - "<|/INST|>"
+  - "<|user|>"
+  - "<|assistant|>"
+  - "<|system|>"
