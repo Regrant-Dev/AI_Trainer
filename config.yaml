@@ -4,15 +4,28 @@ tokenizer_type: AutoTokenizer
 tokenizer_use_fast: false
 
 load_in_8bit: false
-load_in_4bit: false
+load_in_4bit: true
 strict: false
 
 datasets:
-  - path: /app/data/mira_data.jsonl
+  - path: /app/data/data.jsonl
     type: sharegpt
     conversation: chatml
 
 chat_template: chatml
+
+adapter: lora
+lora_model_dir:
+lora_r: 512
+lora_alpha: 256
+lora_dropout: 0.05
+lora_targets:  # Define specific targets
+  - qkv
+  - qkv-o
+  - qkv-down
+  - qv
+lora_target_linear: true
+lora_fan_in_fan_out:
 
 dataset_prepared_path: /app/preprocess_datasets/
 output_dir: /app/output
@@ -21,58 +34,46 @@ sequence_len: 8192
 sample_packing: true
 pad_to_sequence_len: true
 
-wandb_project: chat-model-llama3-8b
-wandb_entity:
+gradient_accumulation_steps: 1
+micro_batch_size: 3
+num_epochs: 4
+logging_steps: 1
+optimizer: adamw_bnb_8bit
+lr_scheduler: cosine
+learning_rate: 2e-5
+
+wandb_project: AI_Train
 wandb_watch:
 wandb_run_id:
 wandb_log_model:
 
-gradient_accumulation_steps: 1
-micro_batch_size: 6
-eval_batch_size: 6
-num_epochs: 3
-optimizer: galore_adamw_8bit
-lr_scheduler: cosine
-learning_rate: 2e-5
-cosine_min_lr_ratio: 0
-weight_decay: 0.1
-# adamw hyperparams
-adam_beta1: 0.9
-adam_beta2: 0.999
-adam_epsilon: 0.00000001
-# Gradient clipping max norm
-max_grad_norm: 1.0
-noisy_embedding_alpha: 5
-
-optim_args:
-#For Galore Optimizers the following optim_args are available
-    rank: 256 # type: int
-    update_proj_gap: 200  # type: int
-    scale: 0.25  # type: float
-    proj_type: "std" # type: str, default = std
-
-optim_target_modules: 
-  - mlp
-  - self_attn
 train_on_inputs: false
 group_by_length: false
 bf16: true
-fp16: false
-tf32: false
 
 gradient_checkpointing: true
+gradient_checkpointing_kwargs:
+  use_reentrant: false
 early_stopping_patience:
-resume_from_checkpoint: 
+resume_from_checkpoint:
 local_rank:
-logging_steps: 1
-xformers_attention:
+xformers_attention: false
 flash_attention: true
-
-warmup_steps: 10
-auto_resume_from_checkpoints: false
-eval_steps: 10
-saves_per_epoch: 1
-eval_sample_packing: false
+saves_per_epoch: 4
 save_total_limit: 2
+save_steps:
+evals_per_epoch: 4
+eval_sample_packing: false
 debug:
 deepspeed:
+weight_decay: 0.05
+fsdp:
+fsdp_config:
+special_tokens:
+  bos_token: "<|begin_of_text|>"
+  eos_token: "<|eot_id|>"
+  pad_token: "<|eot_id|>"
+tokens:
+  - "<|begin_of_text|>"
+  - "<|eot_id|>"
+  - "<|eot_id|>"
