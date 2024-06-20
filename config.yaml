@@ -1,4 +1,4 @@
-base_model: /app/base_models/Meta-Llama-3-8B-Instruct
+base_model: /app/base_models/Meta-Llama-3-8B
 model_type: AutoModelForCausalLM
 tokenizer_type: AutoTokenizer
 tokenizer_use_fast: false
@@ -16,31 +16,34 @@ chat_template: chatml
 
 adapter: lora
 lora_model_dir:
-lora_r: 512
-lora_alpha: 256
+lora_r: 256
+lora_alpha: 512
 lora_dropout: 0.05
 lora_targets:  # Define specific targets
-  - qkv
-  - qkv-o
-  - qkv-down
-  - qv
+  - q
+  - k
+  - v
+  - o
 lora_target_linear: true
 lora_fan_in_fan_out:
+lora_modules_to_save:  # Add this parameter
+  - embed_tokens
+  - lm_head
 
 dataset_prepared_path: /app/preprocess_datasets/
 output_dir: /app/output
 
-sequence_len: 8192
+sequence_len: 2048
 sample_packing: true
 pad_to_sequence_len: true
 
 gradient_accumulation_steps: 1
 micro_batch_size: 3
-num_epochs: 4
+num_epochs: 3
 logging_steps: 1
 optimizer: adamw_bnb_8bit
 lr_scheduler: cosine
-learning_rate: 2e-5
+learning_rate: 1e-5
 
 wandb_project: AI_Train
 wandb_watch:
@@ -59,10 +62,10 @@ resume_from_checkpoint:
 local_rank:
 xformers_attention: false
 flash_attention: true
-saves_per_epoch: 4
+saves_per_epoch: 3
 save_total_limit: 2
 save_steps:
-evals_per_epoch: 4
+evals_per_epoch: 3
 eval_sample_packing: false
 debug:
 deepspeed:
