@@ -19,7 +19,7 @@ lora_model_dir:
 lora_r: 128
 lora_alpha: 256
 lora_dropout: 0.05
-lora_targets:  # Define specific targets
+lora_targets:
   - q
   - k
   - v
@@ -30,24 +30,17 @@ lora_modules_to_save:  # Add this parameter
   - embed_tokens
   - lm_head
 
-quantization_config:
-  load_in_4bit: true
-  bnb_4bit_compute_dtype: torch.bfloat16
-  bnb_4bit_use_double_quant: true
-  bnb_4bit_quant_type: nf4
-
 dataset_prepared_path: /app/preprocess_datasets/
 output_dir: /app/output
 
-sequence_len: 1024
+sequence_len: 2048
 sample_packing: true
 pad_to_sequence_len: true
 
-gradient_accumulation_steps: 1
-micro_batch_size: 2
+gradient_accumulation_steps: 4
+micro_batch_size: 3
 num_epochs: 3
-logging_steps: 1
-optimizer: adamw_bnb_8bit
+optimizer: paged_adamw_32bit
 lr_scheduler: cosine
 learning_rate: 2e-4
 
@@ -58,24 +51,27 @@ wandb_log_model:
 
 train_on_inputs: false
 group_by_length: false
-bf16: true
+bf16: auto
+fp16:
+tf32: false
 
 gradient_checkpointing: true
-gradient_checkpointing_kwargs:
-  use_reentrant: false
 early_stopping_patience:
 resume_from_checkpoint:
 local_rank:
-xformers_attention: false
+logging_steps: 1
+xformers_attention:
 flash_attention: true
-saves_per_epoch: 3
-save_total_limit: 10
-save_steps:
-evals_per_epoch: 3
-eval_sample_packing: false
+s2_attention:
+
+warmup_steps: 10
+evals_per_epoch: 4
+eval_table_size:
+eval_max_new_tokens: 128
+saves_per_epoch: 1
 debug:
 deepspeed:
-weight_decay: 0.05
+weight_decay: 0.0
 fsdp:
 fsdp_config:
 special_tokens:
