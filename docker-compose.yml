@@ -7,7 +7,7 @@ services:
       - "2212:2212"
     volumes:
       - .:/app
-      - /mnt/user/appdata/AI_Trainer/base_models:/app/base_models
+      - /mnt/user/ExtraStorage/llm_models:/app/base_models
       - /mnt/user/appdata/AI_Trainer/data:/app/data
       - /mnt/user/appdata/AI_Trainer:/app
     environment:
