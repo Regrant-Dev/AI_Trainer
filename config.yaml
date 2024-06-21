@@ -26,6 +26,9 @@ lora_targets:
   - o
 lora_target_linear: true
 lora_fan_in_fan_out:
+lora_modules_to_save:  # Add this parameter
+  - embed_tokens
+  - lm_head
 
 dataset_prepared_path: /app/preprocess_datasets/
 output_dir: /app/output
