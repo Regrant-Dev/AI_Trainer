@@ -10,6 +10,7 @@ strict: false
 datasets:
   - path: /app/data/data.jsonl
     type: sharegpt
+    val_set_size: 0.1  # Use 10% of the data for validation
     conversation: chatml
 
 chat_template: chatml
@@ -38,7 +39,7 @@ sample_packing: true
 pad_to_sequence_len: true
 
 gradient_accumulation_steps: 4
-micro_batch_size: 3
+micro_batch_size: 2
 num_epochs: 3
 optimizer: paged_adamw_32bit
 lr_scheduler: cosine
