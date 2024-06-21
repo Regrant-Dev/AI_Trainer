@@ -10,12 +10,12 @@ strict: false
 datasets:
   - path: /app/data/data.jsonl
     type: sharegpt
-    val_set_size: 0.1  # Use 10% of the data for validation
+    val_set_size: 0.1 # Use 10% of the data for validation
     conversation: chatml
 
 chat_template: chatml
 
-adapter: qlora
+adapter: lora
 lora_model_dir:
 lora_r: 128
 lora_alpha: 256
@@ -31,6 +31,12 @@ lora_modules_to_save:
   - embed_tokens
   - lm_head
 
+quantization_config:
+  load_in_4bit: true
+  bnb_4bit_compute_dtype: torch.bfloat16
+  bnb_4bit_use_double_quant: true
+  bnb_4bit_quant_type: nf4
+
 dataset_prepared_path: /app/preprocess_datasets/
 output_dir: /app/output
 
@@ -38,10 +44,10 @@ sequence_len: 1024
 sample_packing: true
 pad_to_sequence_len: true
 
-gradient_accumulation_steps: 4
+gradient_accumulation_steps: 1
 micro_batch_size: 2
 num_epochs: 3
-optimizer: paged_adamw_32bit
+optimizer: adamw_bnb_8bit
 lr_scheduler: cosine
 learning_rate: 2e-4
 
@@ -72,7 +78,7 @@ eval_max_new_tokens: 128
 saves_per_epoch: 1
 debug:
 deepspeed:
-weight_decay: 0.0
+weight_decay: 0.01
 fsdp:
 fsdp_config:
 special_tokens:
