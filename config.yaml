@@ -46,7 +46,7 @@ pad_to_sequence_len: true
 
 gradient_accumulation_steps: 1
 micro_batch_size: 2
-num_epochs: 3
+num_epochs: 2
 optimizer: adamw_bnb_8bit
 lr_scheduler: cosine
 learning_rate: 2e-4
@@ -95,3 +95,4 @@ tokens:
   - "<|user|>"
   - "<|assistant|>"
   - "<|system|>"
+evaluation_strategy: "steps"  # Ensure evaluation occurs at intervals
