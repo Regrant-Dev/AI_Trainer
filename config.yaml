@@ -34,7 +34,7 @@ lora_modules_to_save:
 dataset_prepared_path: /app/preprocess_datasets/
 output_dir: /app/output
 
-sequence_len: 2048
+sequence_len: 1024
 sample_packing: true
 pad_to_sequence_len: true
 
