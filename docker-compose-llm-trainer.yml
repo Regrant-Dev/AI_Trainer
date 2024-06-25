@@ -2,11 +2,13 @@ version: '3.8'
 
 services:
   app:
-    image: nvidia/cuda:12.4.1-cudnn-devel-ubuntu20.04
+    image: winglian/axolotl-runpod:main-py3.10-cu121-2.1.2
     ports:
       - "2212:2212"
     volumes:
       - .:/app
+      - /mnt/user/ExtraStorage/llm_models:/app/base_models
+      - /mnt/user/appdata/AI_Trainer/data:/app/data
       - /mnt/user/appdata/AI_Trainer:/app
     environment:
       - CUDA_DEVICE_ORDER=PCI_BUS_ID
