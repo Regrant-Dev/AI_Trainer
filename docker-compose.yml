@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
   app:
-    image: nvidia/cuda:12.4.1-cudnn-devel-ubuntu20.04
     ports:
       - "2212:2212"
     volumes:
