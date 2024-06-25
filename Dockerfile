@@ -44,8 +44,8 @@ ENV TZ=America/Los_Angeles
 # Copy the rest of the working directory contents into the container at /app
 COPY . .
 
-# Make port 9475 available to the world outside this container
-EXPOSE 9475
+# Make port 2212 available to the world outside this container
+EXPOSE 2212
 
 # Keep the container running with an interactive bash shell
 CMD ["bash"]
