@@ -37,13 +37,13 @@ RUN curl -sS https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
     rm get-pip.py
 
 # Downgrade pip to version 23.0.1
-RUN python -m pip install pip==23.0.1
+RUN python3.10 -m pip install pip==23.0.1
 
 # Set the working directory to /root for the rest of the setup
 WORKDIR /root
 
 # Set up the virtual environment
-RUN python -m venv /root/piper/src/python/.venv
+RUN python3.10 -m venv /root/piper/src/python/.venv
 
 # Activate virtual environment and install dependencies
 RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate \
