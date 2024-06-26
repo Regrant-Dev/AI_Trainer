@@ -46,33 +46,21 @@ WORKDIR /root/piper
 # Set up the virtual environment
 RUN python3.10 -m venv /root/piper/src/python/.venv
 
-# Set environment variables for the virtual environment
-ENV VIRTUAL_ENV=/root/piper/src/python/.venv
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
 # Upgrade wheel and setuptools
-RUN pip install --upgrade wheel setuptools
+RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install --upgrade wheel setuptools"
 
 # Install PyTorch with CUDA support
-RUN pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118"
 
 # Install Piper in editable mode
-RUN pip install -e /root/piper/src/python
+RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install -e /root/piper/src/python"
 
 # Install other dependencies
-RUN pip install torchmetrics==0.11.4
-RUN pip install tensorboard
-RUN pip install cython>=0.29.0,<1
-RUN pip install librosa>=0.9.2,<1
-RUN pip install piper-phonemize~=1.1.0
-RUN pip install numpy>=1.19.0
-RUN pip install onnxruntime>=1.11.0
-RUN pip install pytorch-lightning~=1.9.0
-RUN pip install onnx
+RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install tensorboard && torchmetrics==0.11.4"
 
 # Build the Cython extension
 RUN chmod +x /root/piper/src/python/build_monotonic_align.sh && \
-    bash /root/piper/src/python/build_monotonic_align.sh
+    /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && bash /root/piper/src/python/build_monotonic_align.sh"
 
 # Expose ports for TensorBoard and other services
 EXPOSE 2212
