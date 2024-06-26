@@ -86,6 +86,20 @@ python3.10 -m piper_train \
     --precision 32 \
     --quality high
 
+To run in background:
+nohup python3.10 -m piper_train \
+    --dataset-dir ~/piper/my-training \
+    --accelerator 'gpu' \
+    --devices 1 \
+    --batch-size 12 \
+    --validation-split 0.0 \
+    --num-test-examples 0 \
+    --max_epochs 6000 \
+    --resume_from_checkpoint ~/piper/epoch=2218-step=838782.ckpt \
+    --checkpoint-epochs 100 \
+    --precision 32 \
+    --quality high > piper_train.log 2>&1 &
+
 # Step 7
 Monitor training with tensorboard
 
@@ -96,6 +110,7 @@ Monitor training with tensorboard
 source ~/piper/src/python/.venv/bin/activate
 
 * Run: tensorboard --logdir /root/piper/my-training/lightning_logs --bind_all
+To run in background: nohup tensorboard --logdir /root/piper/my-training/lightning_logs --bind_all > tensorboard.log 2>&1 &
 
 * Open url - 192.168.*.*:6006  #Replace * with actual number for local ip
 
