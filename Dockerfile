@@ -56,7 +56,15 @@ RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip instal
 RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install -e /root/piper/src/python"
 
 # Install other dependencies
-RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install cython>=0.29.0,<1 librosa>=0.9.2,<1 piper-phonemize~=1.1.0 numpy>=1.19.0 onnxruntime>=1.11.0 pytorch-lightning~=1.9.0 onnx torchmetrics==0.11.4 tensorboard"
+RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install torchmetrics==0.11.4"
+RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install tensorboard"
+RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install cython>=0.29.0,<1"
+RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install librosa>=0.9.2,<1"
+RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install piper-phonemize~=1.1.0"
+RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install numpy>=1.19.0"
+RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install onnxruntime>=1.11.0"
+RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install pytorch-lightning~=1.9.0"
+RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install onnx"
 
 # Build the Cython extension
 RUN chmod +x /root/piper/src/python/build_monotonic_align.sh && \
