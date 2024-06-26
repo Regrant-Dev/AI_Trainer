@@ -37,7 +37,7 @@ Run:
 python3 -m pip install -e .
 
 Run:
-build_monotonic_align.sh
+bash build_monotonic_align.sh
 
 # Step 2
 Download existing model to fine tune from
