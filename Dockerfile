@@ -14,10 +14,15 @@ WORKDIR /app
 COPY . .
 
 # Install git and wget
+# Install git, wget, curl, and Python
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     wget \
     curl \
+    python3.10 \
+    python3.10-venv \
+    python3.10-dev \
+    python3-distutils \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
