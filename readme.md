@@ -1,3 +1,4 @@
+### LLM Training
 # Step 1
 go to app folder
 cd /app
@@ -11,3 +12,7 @@ python -m axolotl.cli.preprocess /app/config.yaml
 
 Start the training with: 
 accelerate launch -m axolotl.cli.train /app/config.yaml
+
+
+### Voice Training
+
