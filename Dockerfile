@@ -49,36 +49,16 @@ RUN python3.10 -m venv /root/piper/src/python/.venv
 # Activate virtual environment and install dependencies
 RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && \
     pip install --upgrade wheel setuptools && \
-    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118"
-    
-
-# Activate virtual environment
-RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install --upgrade wheel setuptools"
-RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118"
-
-# Install
-RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && cd /root/piper/src/python && pip install -e ."
-
-# Install working dependencies separately to debug issues
-RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install cython>=0.29.0,<1"
-RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install librosa>=0.9.2,<1"
-RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install piper-phonemize~=1.1.0"
-RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install numpy>=1.19.0"
-RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install onnxruntime>=1.11.0"
-RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install pytorch-lightning~=1.9.0"
-RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install onnx"
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 && \
+    pip install -e /root/piper/src/python && \
+    pip install cython>=0.29.0,<1 librosa>=0.9.2,<1 piper-phonemize~=1.1.0 numpy>=1.19.0 onnxruntime>=1.11.0 pytorch-lightning~=1.9.0 onnx && \
+    pip install torchmetrics==0.11.4 tensorboard"
 
 # Build the Cython extension
 RUN chmod +x /root/piper/src/python/build_monotonic_align.sh && \
     /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && bash /root/piper/src/python/build_monotonic_align.sh"
 
-# Add torchmetrics
-RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && python3.10 -m pip install torchmetrics=0.11.4"
-
-# Add tensorboard
-RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install tensorboard"
-
-# Make port 2212 and 6006 available to the world outside this container
+# Expose ports for TensorBoard and other services
 EXPOSE 2212
 EXPOSE 6006
 
