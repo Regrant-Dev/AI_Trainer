@@ -24,7 +24,7 @@ source ~/piper/src/python/.venv/bin/activate
 Go to python dir:
 cd ~/piper/src/python/
 
-Edit requirements txt Replace everything in there with this:
+Edit requirements.txt replace everything in there with this:
 cython>=0.29.0,<1
 librosa>=0.9.2,<1
 piper-phonemize~=1.1.0
