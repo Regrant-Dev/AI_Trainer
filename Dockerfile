@@ -48,4 +48,4 @@ COPY . .
 EXPOSE 2212
 
 # Keep the container running with an interactive bash shell
-CMD ["bash"]
+CMD ["tail", "-f", "/dev/null"]
