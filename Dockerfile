@@ -13,12 +13,14 @@ WORKDIR /app
 # Copy the rest of the working directory contents into the container at /app
 COPY . .
 
-# Install git and wget
-# Install git, wget, curl, and Python
+# Install git, wget, curl, and add deadsnakes PPA for Python 3.10
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     wget \
     curl \
+    software-properties-common && \
+    add-apt-repository ppa:deadsnakes/ppa && \
+    apt-get update && apt-get install -y --no-install-recommends \
     python3.10 \
     python3.10-venv \
     python3.10-dev \
