@@ -21,6 +21,24 @@ Run:  docker exec -it trainer-app-1 /bin/bash
 Activate environment:
 source ~/piper/src/python/.venv/bin/activate
 
+Go to python dir:
+cd ~/piper/src/python/
+
+Edit requirements txt Replace everything in there with this:
+cython>=0.29.0,<1
+librosa>=0.9.2,<1
+piper-phonemize~=1.1.0
+numpy>=1.19.0
+onnxruntime>=1.11.0
+pytorch-lightning~=1.9.0
+onnx
+
+Run:
+pip install -e
+
+Run:
+build_monotonic_align.sh
+
 # Step 2
 Download existing model to fine tune from
 For highquality:
@@ -32,7 +50,7 @@ wget https://huggingface.co/datasets/rhasspy/piper-checkpoints/resolve/main/en/e
 
 # Step 3
 Copy over the dataset
-cp -r /app/dataset my-dataset
+cp -r /app/dataset ~/piper/my-dataset
 
 # Step 4
 cd ~/piper/src/python/

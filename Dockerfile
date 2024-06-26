@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     wget \
     curl \
+    nano \
     software-properties-common \
     build-essential \
     && add-apt-repository ppa:deadsnakes/ppa && \
@@ -52,15 +53,8 @@ RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip instal
 # Install PyTorch with CUDA support
 RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118"
 
-# Install Piper in editable mode
-RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install -e /root/piper/src/python"
-
 # Install other dependencies
 RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install tensorboard && torchmetrics==0.11.4"
-
-# Build the Cython extension
-RUN chmod +x /root/piper/src/python/build_monotonic_align.sh && \
-    /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && bash /root/piper/src/python/build_monotonic_align.sh"
 
 # Expose ports for TensorBoard and other services
 EXPOSE 2212
