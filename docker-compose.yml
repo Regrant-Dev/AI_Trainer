@@ -18,3 +18,4 @@ services:
             - driver: nvidia
               device_ids: ['1']
               capabilities: [gpu]
+    shm_size: '16g'  # Increase shared memory size to 16GB
