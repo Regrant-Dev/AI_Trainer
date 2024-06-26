@@ -33,7 +33,7 @@ RUN git clone https://github.com/rhasspy/piper
 
 # Download and install pip using get-pip.py
 RUN curl -sS https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
-    python get-pip.py && \
+    python3.10 get-pip.py && \
     rm get-pip.py
 
 # Downgrade pip to version 23.0.1
