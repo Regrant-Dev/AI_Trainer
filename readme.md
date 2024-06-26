@@ -94,6 +94,6 @@ Monitor training with tensorboard
 * Activate Env
 source ~/piper/src/python/.venv/bin/activate
 
-* Run: tensorboard --logdir ~/piper/my-training/lightning_logs --bind_all
+* Run: tensorboard --logdir /root/piper/my-training/lightning_logs --bind_all
 
 * Open url - 192.168.*.*:6006  #Replace * with actual number for local ip
