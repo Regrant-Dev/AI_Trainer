@@ -71,6 +71,7 @@ Run the training
 
 * Modify batches based on how vram you have
 * Realistically you only need 1000 epochs for fine tunes and 2000 epochs for training from scratch
+* Note: The epoch value is the total amount of epochs. If your existing checkpoint is 2300, and you set max_epochs to 2400, it will only train 100 epochs.
 
 python3.10 -m piper_train \
     --dataset-dir ~/piper/my-training \
@@ -97,3 +98,16 @@ source ~/piper/src/python/.venv/bin/activate
 * Run: tensorboard --logdir /root/piper/my-training/lightning_logs --bind_all
 
 * Open url - 192.168.*.*:6006  #Replace * with actual number for local ip
+
+# Step 8
+Once done training:
+mkdir ~/piper/my-model
+
+Run:
+python3 -m piper_train.export_onnx \
+    ~/piper/my-training/lightning_logs/version_0/checkpoints/YOUR_CHECK_POINT_NAME \
+    ~/piper/my-model/model.onnx
+
+Run:
+cp ~/piper/my-training/config.json \
+   ~/piper/my-model/model.onnx.json
