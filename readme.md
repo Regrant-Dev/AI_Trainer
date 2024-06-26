@@ -51,6 +51,9 @@ python3.10 -m piper_train.preprocess \
 # Step 6
 Run the training
 
+* Modify batches based on how vram you have
+* Realistically you only need 1000 epochs for fine tunes and 2000 epochs for training from scratch
+
 python3.10 -m piper_train \
     --dataset-dir ~/piper/my-training \
     --accelerator 'gpu' \
