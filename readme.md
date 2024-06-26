@@ -18,10 +18,7 @@ accelerate launch -m axolotl.cli.train /app/config.yaml
 # Step 1
 Run:  docker exec -it trainer-app-1 /bin/bash
 
-Go to DIR:
-cd piper
-
-Then activate environment:
+Activate environment:
 source ~/piper/src/python/.venv/bin/activate
 
 # Step 2

@@ -41,17 +41,25 @@ RUN curl -sS https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
 RUN python3.10 -m pip install pip==23.0.1
 
 # Set the working directory to /root for the rest of the setup
-WORKDIR /root
+WORKDIR /root/piper
 
 # Set up the virtual environment
 RUN python3.10 -m venv /root/piper/src/python/.venv
 
-# Activate virtual environment and install dependencies
+# Activate virtual environment and install dependencies step by step
 RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && \
-    pip install --upgrade wheel setuptools && \
-    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 && \
-    pip install -e /root/piper/src/python && \
-    pip install cython>=0.29.0,<1 librosa>=0.9.2,<1 piper-phonemize~=1.1.0 numpy>=1.19.0 onnxruntime>=1.11.0 pytorch-lightning~=1.9.0 onnx && \
+    pip install --upgrade wheel setuptools"
+
+RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && \
+    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118"
+
+RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && \
+    pip install -e /root/piper/src/python"
+
+RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && \
+    pip install cython>=0.29.0,<1 librosa>=0.9.2,<1 piper-phonemize~=1.1.0 numpy>=1.19.0 onnxruntime>=1.11.0 pytorch-lightning~=1.9.0 onnx"
+
+RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && \
     pip install torchmetrics==0.11.4 tensorboard"
 
 # Build the Cython extension
