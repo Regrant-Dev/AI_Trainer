@@ -49,7 +49,7 @@ RUN python3.10 -m venv /root/piper/src/python/.venv
 RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate \
     && pip install --upgrade wheel setuptools \
     && pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118 \
-    && pip install cython>=0.29.0,<1 librosa>=0.9.2,<1 piper-phonemize~=1.1.0 numpy>=1.19.0 onnxruntime>=1.11.0 pytorch-lightning~=1.9.0 onnx
+    && pip install cython>=0.29.0,<1 librosa>=0.9.2,<1 piper-phonemize~=1.1.0 numpy>=1.19.0 onnxruntime>=1.11.0 pytorch-lightning~=1.9.0 onnx \
 
 # Build the Cython extension
 RUN chmod +x /root/piper/src/python/build_monotonic_align.sh && /root/piper/src/python/build_monotonic_align.sh
