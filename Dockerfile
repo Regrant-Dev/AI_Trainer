@@ -17,6 +17,7 @@ COPY . .
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     wget \
+    curl \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
