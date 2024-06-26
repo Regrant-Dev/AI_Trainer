@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   app:
+    build: .
     ports:
       - "2212:2212"
     volumes:
