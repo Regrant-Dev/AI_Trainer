@@ -57,7 +57,7 @@ RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip instal
 RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118"
 
 # Install
-RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install -e ."
+RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && cd /root/piper/src/python && pip install -e ."
 
 # Install working dependencies separately to debug issues
 RUN /bin/bash -c "source /root/piper/src/python/.venv/bin/activate && pip install cython>=0.29.0,<1"

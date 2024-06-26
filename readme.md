@@ -15,4 +15,67 @@ accelerate launch -m axolotl.cli.train /app/config.yaml
 
 
 ### Voice Training
+# Step 1
+Run:  docker exec -it trainer-app-1 /bin/bash
 
+Go to DIR:
+cd piper
+
+Then activate environment:
+source ~/piper/src/python/.venv/bin/activate
+
+# Step 2
+Download existing model to fine tune from
+For highquality:
+wget https://huggingface.co/datasets/rhasspy/piper-checkpoints/resolve/main/en/en_US/lessac/high/epoch%3D2218-step%3D838782.ckpt -O ~/piper/epoch=2218-step=838782.ckpt
+* Pass in the "--quality high" flag for this one
+
+For normal:
+wget https://huggingface.co/datasets/rhasspy/piper-checkpoints/resolve/main/en/en_US/lessac/medium/epoch%3D2164-step%3D1355540.ckpt -O ~/piper/epoch=2164-step=1355540.ckpt
+
+# Step 3
+Copy over the dataset
+cp -r /app/dataset my-dataset
+
+# Step 4
+cd ~/piper/src/python/
+
+# Step 5
+Run the preprocess
+
+python3.10 -m piper_train.preprocess \
+  --language en \
+  --input-dir ~/piper/my-dataset \
+  --output-dir ~/piper/my-training \
+  --dataset-format ljspeech \
+  --single-speaker \
+  --sample-rate 22050
+
+# Step 6
+Run the training
+
+python3.10 -m piper_train \
+    --dataset-dir ~/piper/my-training \
+    --accelerator 'gpu' \
+    --devices 1 \
+    --batch-size 12 \
+    --validation-split 0.0 \
+    --num-test-examples 0 \
+    --max_epochs 6000 \
+    --resume_from_checkpoint ~/piper/epoch=2218-step=838782.ckpt \
+    --checkpoint-epochs 100 \
+    --precision 32 \
+    --quality high
+
+# Step 7
+Monitor training with tensorboard
+
+* Open new terminal exec -it into the container
+    *  docker exec -it trainer-app-1 /bin/bash
+
+* Activate Env
+source ~/piper/src/python/.venv/bin/activate
+
+* Run tensorboard --logdir ~piper/my-training/lightning_logs
+
+* Open url
