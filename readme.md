@@ -122,9 +122,12 @@ mkdir ~/piper/my-model
 
 Run:
 python3 -m piper_train.export_onnx \
-    ~/piper/my-training/lightning_logs/version_0/checkpoints/YOUR_CHECK_POINT_NAME \
-    ~/piper/my-model/model.onnx
+    ~/piper/my-training/lightning_logs/version_0/checkpoints/YOUR_CHECK_POINT_NAME.ckpt \
+    ~/piper/my-model/MODEL-YOUR_CHECK_POINT_NAME.onnx
 
 Run:
 cp ~/piper/my-training/config.json \
    ~/piper/my-model/model.onnx.json
+
+mv ~/piper/my-model /app
+mv ~/piper/my-training/lightning_logs/version_0/checkpoints/YOUR_CHECK_POINT_NAME.ckpt /app
