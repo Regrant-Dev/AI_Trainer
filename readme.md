@@ -49,6 +49,8 @@ For normal:
 wget https://huggingface.co/datasets/rhasspy/piper-checkpoints/resolve/main/en/en_US/lessac/medium/epoch%3D2164-step%3D1355540.ckpt -O ~/piper/epoch=2164-step=1355540.ckpt
 
 # Step 3
+Rename training.txt to metadata.csv
+
 Copy over the dataset
 cp -r /app/dataset ~/piper/my-dataset
 
