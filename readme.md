@@ -34,7 +34,7 @@ pytorch-lightning~=1.9.0
 onnx
 
 Run:
-python3 -m pip install -e .
+python3.10 -m pip install -e .
 
 Run:
 bash build_monotonic_align.sh
