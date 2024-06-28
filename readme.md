@@ -119,6 +119,9 @@ To run in background: nohup tensorboard --logdir /root/piper/my-training/lightni
 * Open url - 192.168.*.*:6006  #Replace * with actual number for local ip
 
 # Step 8
+* Activate Env (if needed)
+source ~/piper/src/python/.venv/bin/activate
+
 Once done training:
 mkdir ~/piper/my-model
 
