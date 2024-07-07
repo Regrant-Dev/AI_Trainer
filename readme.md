@@ -127,12 +127,12 @@ mkdir ~/piper/my-model
 
 Run:
 python3.10 -m piper_train.export_onnx \
-    ~/piper/my-training/lightning_logs/version_0/checkpoints/epoch=2999-step=1035594.ckpt.ckpt \
-    ~/piper/my-model/MODEL-epoch=2999-step=1035594.ckpt.onnx
+    ~/piper/my-training/lightning_logs/version_0/checkpoints/epoch=2999-step=1035594.ckpt \
+    ~/piper/my-model/MODEL-epoch=2999-step=1035594.onnx
 
 Run:
 cp ~/piper/my-training/config.json \
    ~/piper/my-model/model.onnx.json
 
 mv ~/piper/my-model /app
-mv ~/piper/my-training/lightning_logs/version_0/checkpoints/epoch=2999-step=1035594.ckpt.ckpt /app
+mv ~/piper/my-training/lightning_logs/version_0/checkpoints/epoch=2999-step=1035594.ckpt /app
